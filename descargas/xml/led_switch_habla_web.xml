@@ -1,0 +1,232 @@
+<xml xmlns="https://developers.google.com/blockly/xml" zoom="0.4629629629629631" scrollX="86.11776006982856" scrollY="-260.5956605327093">
+  <variables>
+    <variable id="VAR_CORRIENTE">corriente</variable>
+  </variables>
+  <block type="start_execution" id="d%B@rcFBxcO1U-U6m|-}" deletable="false" x="-126" y="-62">
+    <statement name="DO">
+      <block type="cam_reset" id="M7gx0x-Kr}k:7O4W^bUv">
+        <next>
+          <block type="source_connection" id="z03V%6oZo_[4uiugT)pu">
+            <value name="VOLTAGE">
+              <shadow type="source_voltage_dropdown" id="wV|Q(,iMgE[7k^UD!!-*">
+                <field name="VOLTAGE">2</field>
+              </shadow>
+            </value>
+            <value name="VCC_COORD">
+              <shadow type="text" id="bLO2VHb5oD-h(^UydW={">
+                <field name="TEXT">PS20</field>
+              </shadow>
+            </value>
+            <value name="GND_COORD">
+              <shadow type="text" id="p(A2G)BjcufZN`Vy-KX(">
+                <field name="TEXT">NS14</field>
+              </shadow>
+            </value>
+            <next>
+              <block type="jumper" id="sq.Wcb0S7E9:xhLG_f0K">
+                <value name="COLOR">
+                  <shadow type="jumper_color_dropdown" id="wbj6vJ2QFM@)JPgwvb%.">
+                    <field name="COLOR">1</field>
+                  </shadow>
+                </value>
+                <value name="COORD_A">
+                  <shadow type="text" id="d/$@u}r2x2={5JqvTsnM">
+                    <field name="TEXT">PS19</field>
+                  </shadow>
+                </value>
+                <value name="COORD_B">
+                  <shadow type="text" id="W)wOGh(RIfTR:sNqrwRT">
+                    <field name="TEXT">J19</field>
+                  </shadow>
+                </value>
+                <next>
+                  <block type="switch" id="?-$TtzV.0tI1RY4$V-!+">
+                    <value name="STATE">
+                      <shadow type="switch_state_dropdown" id="sKs^mze7A%N3pvhpIZuO">
+                        <field name="STATE">1</field>
+                      </shadow>
+                    </value>
+                    <value name="COORD_A">
+                      <shadow type="text" id="8K%,PGJS}@.1tVb/AGAL">
+                        <field name="TEXT">I19</field>
+                      </shadow>
+                    </value>
+                    <value name="COORD_B">
+                      <shadow type="text" id="wDnOTbm,/_E.7-nR-;P%">
+                        <field name="TEXT">I17</field>
+                      </shadow>
+                    </value>
+                    <next>
+                      <block type="resistor" id="PCwu/Xi{]UAxdBrw96yh">
+                        <value name="VALUE">
+                          <shadow type="math_number" id="X5a}MUsO)8~xx6R0a!j=">
+                            <field name="NUM">220</field>
+                          </shadow>
+                        </value>
+                        <value name="COORD_A">
+                          <shadow type="text" id="o83H^SlXihw,9PtQxam/">
+                            <field name="TEXT">H17</field>
+                          </shadow>
+                        </value>
+                        <value name="COORD_B">
+                          <shadow type="text" id="QjB`xKw[yYC]f[~RD-P]">
+                            <field name="TEXT">H15</field>
+                          </shadow>
+                        </value>
+                        <next>
+                          <block type="led" id=".J]AygBHO6-3M)/[vL4;">
+                            <value name="COLOR">
+                              <shadow type="led_color_dropdown" id="~E)*ehSu[4MNXq|K;Y.z">
+                                <field name="COLOR">1</field>
+                              </shadow>
+                            </value>
+                            <value name="ANODE">
+                              <shadow type="text" id="x%/J|P.}AEu!(jA^9#k*">
+                                <field name="TEXT">H14</field>
+                              </shadow>
+                            </value>
+                            <value name="CATHODE">
+                              <shadow type="text" id="BX)c@#Jma5aYc65VwH(N">
+                                <field name="TEXT">H13</field>
+                              </shadow>
+                            </value>
+                            <next>
+                              <block type="jumper" id="@c7N=qMZ_vYD5]sD?)27">
+                                <value name="COLOR">
+                                  <shadow type="jumper_color_dropdown" id="o*W#0Rh~@HmYu;[8v2Oz">
+                                    <field name="COLOR">2</field>
+                                  </shadow>
+                                </value>
+                                <value name="COORD_A">
+                                  <shadow type="text" id="k=-f@A6Hs_1#|^V8-=Q|">
+                                    <field name="TEXT">J13</field>
+                                  </shadow>
+                                </value>
+                                <value name="COORD_B">
+                                  <shadow type="text" id="0)l6/V`kZqS##mGW$~=4">
+                                    <field name="TEXT">NS13</field>
+                                  </shadow>
+                                </value>
+                                <next>
+                                  <block type="multimeter_connection" id="Q,}19YRx9^lT98T@eC/O">
+                                    <field name="MODE">A</field>
+                                    <value name="RED">
+                                      <shadow type="text" id="W|X0`3ABzcFTQQr|iRhC">
+                                        <field name="TEXT">G15</field>
+                                      </shadow>
+                                    </value>
+                                    <value name="BLACK">
+                                      <shadow type="text" id=",?Caalh4E)?}aX`sk::t">
+                                        <field name="TEXT">G14</field>
+                                      </shadow>
+                                    </value>
+                                    <next>
+                                      <block type="cam_move_to" id="f:Jup/Clz5$LDDrS)zW}">
+                                        <field name="HEIGHT">10.0</field>
+                                        <next>
+                                          <block type="cam_zoom" id="-vh}N#T:SBWI[~[4I`vZ">
+                                            <field name="LEVEL">35</field>
+                                            <next>
+                                              <block type="forever" id="n*/=0]C@b-~(I@8u6;t?">
+                                                <statement name="DO">
+                                                  <block type="variables_set" id="BFj,e^jr.=jMFG)8p5(K">
+                                                    <field name="VAR" id="VAR_CORRIENTE">corriente</field>
+                                                    <value name="VALUE">
+                                                      <block type="read_multimeter" id="H#eU:/ex^:c_$T]n:DG1">
+                                                        <field name="MODE">A</field>
+                                                      </block>
+                                                    </value>
+                                                    <next>
+                                                      <block type="controls_if" id="Ts/Pl#51[)[[+{ejRjPK">
+                                                        <mutation else="1"></mutation>
+                                                        <value name="IF0">
+                                                          <block type="logic_compare" id="Z[X7[:8ayFJ?kG8uv}ms">
+                                                            <field name="OP">GT</field>
+                                                            <value name="A">
+                                                              <block type="variables_get" id=")TwnRn4im]NQStQYG487">
+                                                                <field name="VAR" id="VAR_CORRIENTE">corriente</field>
+                                                              </block>
+                                                            </value>
+                                                            <value name="B">
+                                                              <shadow type="math_number" id="Da%V^n=dy]^KQ4`6%n?s">
+                                                                <field name="NUM">0.001</field>
+                                                              </shadow>
+                                                            </value>
+                                                          </block>
+                                                        </value>
+                                                        <statement name="DO0">
+                                                          <block type="component_say" id="j*[/kwxV$pEK=_}ZV6Mq">
+                                                            <field name="COMP_TYPE">LED</field>
+                                                            <value name="COORD">
+                                                              <shadow type="text" id="ZBP5_rU/e)32x19sATSJ">
+                                                                <field name="TEXT">G15</field>
+                                                              </shadow>
+                                                            </value>
+                                                            <value name="MSG">
+                                                              <block type="text_join_simple" id="_]jGc/1YC/BufJ9wAS#Z">
+                                                                <value name="A">
+                                                                  <shadow type="text" id="mF}]|Rnk@Uy@.R6ke~N/">
+                                                                    <field name="TEXT">Siento que pasan </field>
+                                                                  </shadow>
+                                                                </value>
+                                                                <value name="B">
+                                                                  <block type="text_join_simple" id="5`^uc4FheyvDmm7PCLY9">
+                                                                    <value name="A">
+                                                                      <block type="variables_get" id="l-]+sR40wT2-GiHPq;T,">
+                                                                        <field name="VAR" id="VAR_CORRIENTE">corriente</field>
+                                                                      </block>
+                                                                    </value>
+                                                                    <value name="B">
+                                                                      <shadow type="text" id="fAe9Uw1pgW8-WEI*9mq7">
+                                                                        <field name="TEXT"> mA por mi cabecita 💡</field>
+                                                                      </shadow>
+                                                                    </value>
+                                                                  </block>
+                                                                </value>
+                                                              </block>
+                                                            </value>
+                                                          </block>
+                                                        </statement>
+                                                        <statement name="ELSE">
+                                                          <block type="component_say" id="CiNsCZgswyYI#Y]Jy:BI">
+                                                            <field name="COMP_TYPE">LED</field>
+                                                            <value name="COORD">
+                                                              <shadow type="text" id="A#7jAw+{HsDl8hvO2Ryy">
+                                                                <field name="TEXT">G15</field>
+                                                              </shadow>
+                                                            </value>
+                                                            <value name="MSG">
+                                                              <block type="text" id="BXlsRBRSpXfo(WGF-O=v">
+                                                                <field name="TEXT">Interruptor Off</field>
+                                                              </block>
+                                                            </value>
+                                                          </block>
+                                                        </statement>
+                                                      </block>
+                                                    </next>
+                                                  </block>
+                                                </statement>
+                                              </block>
+                                            </next>
+                                          </block>
+                                        </next>
+                                      </block>
+                                    </next>
+                                  </block>
+                                </next>
+                              </block>
+                            </next>
+                          </block>
+                        </next>
+                      </block>
+                    </next>
+                  </block>
+                </next>
+              </block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </statement>
+  </block>
+</xml>

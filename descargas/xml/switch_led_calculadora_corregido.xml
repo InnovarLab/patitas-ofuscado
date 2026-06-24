@@ -1,0 +1,229 @@
+<xml xmlns="https://developers.google.com/blockly/xml" zoom="0.4629629629629631" scrollX="24.666656494140625" scrollY="-269.13886854383696">
+  <block type="start_execution" id="{iPr[7mFVGZP3Y[RaMZ6" deletable="false" x="0" y="0">
+    <statement name="DO">
+      <block type="source_connection" id="j0y@qE2sAw_{O8_,TWju">
+        <value name="VOLTAGE">
+          <shadow type="source_voltage_dropdown" id="LkHB#+1/%@b+%uAvtI6f">
+            <field name="VOLTAGE">2</field>
+          </shadow>
+        </value>
+        <value name="VCC_COORD">
+          <shadow type="text" id="i]a8%|m(Ci*$eo33fkw(">
+            <field name="TEXT">PS20</field>
+          </shadow>
+        </value>
+        <value name="GND_COORD">
+          <shadow type="text" id="g^z?lp}FOe-P71@EW|NA">
+            <field name="TEXT">NS14</field>
+          </shadow>
+        </value>
+        <next>
+          <block type="jumper" id="ElAB#eMHPxMrtx*JMW%s">
+            <value name="COLOR">
+              <shadow type="jumper_color_dropdown" id=";um7^WwlAw6.%z;UAiJ0">
+                <field name="COLOR">1</field>
+              </shadow>
+            </value>
+            <value name="COORD_A">
+              <shadow type="text" id="Xq$CKRzs1g[GnHQ^uwc5">
+                <field name="TEXT">PS19</field>
+              </shadow>
+            </value>
+            <value name="COORD_B">
+              <shadow type="text" id="IV/U8M%*[N^(wzNHAZr%">
+                <field name="TEXT">J19</field>
+              </shadow>
+            </value>
+            <next>
+              <block type="switch" id="HXz5Sv8{Rw9Wp[z`stHb">
+                <value name="STATE">
+                  <shadow type="switch_state_dropdown" id="=HWBnHwM@KF$LzTJP;Nt">
+                    <field name="STATE">1</field>
+                  </shadow>
+                </value>
+                <value name="COORD_A">
+                  <shadow type="text" id="kbB;`wwBz28;)KpO^dWH">
+                    <field name="TEXT">I19</field>
+                  </shadow>
+                </value>
+                <value name="COORD_B">
+                  <shadow type="text" id="rrhM3B1A!Y*YmmN.1Etl">
+                    <field name="TEXT">I17</field>
+                  </shadow>
+                </value>
+                <next>
+                  <block type="resistor" id="!ac.~0E2ef8Zh9ogdZ{W">
+                    <value name="VALUE">
+                      <shadow type="math_number" id="Y%3|^X*r/vMeuJ9A0)-5">
+                        <field name="NUM">220</field>
+                      </shadow>
+                    </value>
+                    <value name="COORD_A">
+                      <shadow type="text" id="oPprMH%_QbukKbqh2qFC">
+                        <field name="TEXT">H17</field>
+                      </shadow>
+                    </value>
+                    <value name="COORD_B">
+                      <shadow type="text" id="(Pf[)l=M)ChQcGhW)42K">
+                        <field name="TEXT">H15</field>
+                      </shadow>
+                    </value>
+                    <next>
+                      <block type="multimeter_connection" id="VSqH*yddyK]Zrh{nocS{">
+                        <field name="MODE">A</field>
+                        <value name="RED">
+                          <shadow type="text" id="M*XnU|f;4L|DXw^GQAqe">
+                            <field name="TEXT">G15</field>
+                          </shadow>
+                        </value>
+                        <value name="BLACK">
+                          <shadow type="text" id="QWI_MZshI;BW2ku(o]yv">
+                            <field name="TEXT">G14</field>
+                          </shadow>
+                        </value>
+                        <next>
+                          <block type="led" id="g[04/4~f~z]@o%BJO^OK">
+                            <value name="COLOR">
+                              <shadow type="led_color_dropdown" id="+Dxg)~_+OvO5Y]J/+b1=">
+                                <field name="COLOR">1</field>
+                              </shadow>
+                            </value>
+                            <value name="ANODE">
+                              <shadow type="text" id="IA^8V(;;]HayoG1]QhbE">
+                                <field name="TEXT">H14</field>
+                              </shadow>
+                            </value>
+                            <value name="CATHODE">
+                              <shadow type="text" id="-Mq8%ozeg-c]#]{;At-P">
+                                <field name="TEXT">H13</field>
+                              </shadow>
+                            </value>
+                            <next>
+                              <block type="jumper" id="`r%ADWnZxw+.+)MKRe{7">
+                                <value name="COLOR">
+                                  <shadow type="jumper_color_dropdown" id="AmzunGdPkb){o4IAR`yR">
+                                    <field name="COLOR">2</field>
+                                  </shadow>
+                                </value>
+                                <value name="COORD_A">
+                                  <shadow type="text" id="i6|Jfk%GmpWRP3z@;0iY">
+                                    <field name="TEXT">J13</field>
+                                  </shadow>
+                                </value>
+                                <value name="COORD_B">
+                                  <shadow type="text" id="~K{,*y@8Z?(BKj{$1(Ho">
+                                    <field name="TEXT">NS13</field>
+                                  </shadow>
+                                </value>
+                                <next>
+                                  <block type="component_say" id="Qsb#z3:/UL,VmQC+G+.j">
+                                    <field name="COMP_TYPE">LED</field>
+                                    <value name="COORD">
+                                      <shadow type="text" id=":4CHod%Pb:^min_Og1W]">
+                                        <field name="TEXT">H14</field>
+                                      </shadow>
+                                    </value>
+                                    <value name="MSG">
+                                      <block type="text" id=".eS{581xg8ODlq-#wvA~">
+                                        <field name="TEXT">¡Verificá mi corriente en la calculadora! 🧮</field>
+                                      </block>
+                                    </value>
+                                    <next>
+                                      <block type="base_delay" id="~#:-vtkYThb_%)V8SQIK">
+                                        <value name="DELAY">
+                                          <shadow type="math_number" id="FjCSKHNh`8,C8?e4Vy^G">
+                                            <field name="NUM">3</field>
+                                          </shadow>
+                                        </value>
+                                        <next>
+                                          <block type="open_calculator" id="(yYOB]}$nMJ/;$p3E33J">
+                                            <field name="TAB">ohm</field>
+                                            <next>
+                                              <block type="forever" id="KO^[/~N5wz-Fjy@Fo.J:">
+                                                <statement name="DO">
+                                                  <block type="controls_if" id="pGVxtZRB(L9S2!{q9Crg">
+                                                    <mutation else="1"></mutation>
+                                                    <value name="IF0">
+                                                      <block type="read_switch_state" id="hB3#o+]v.iYrFap}U`2Y">
+                                                        <field name="COMP_TYPE">switch</field>
+                                                        <value name="COORD">
+                                                          <shadow type="text" id=")thJlbD/GR0ooReBAU3}">
+                                                            <field name="TEXT">I19</field>
+                                                          </shadow>
+                                                        </value>
+                                                      </block>
+                                                    </value>
+                                                    <statement name="DO0">
+                                                      <block type="component_say" id="MtZj#2xCh*AAC0YH=aY}">
+                                                        <field name="COMP_TYPE">LED</field>
+                                                        <value name="COORD">
+                                                          <shadow type="text" id="laARbxIA}NmD96r(.P`m">
+                                                            <field name="TEXT">H14</field>
+                                                          </shadow>
+                                                        </value>
+                                                        <value name="MSG">
+                                                          <block type="text" id="(D,mj2vC+oTA:kkR3}c^">
+                                                            <field name="TEXT">¡Estoy encendido! Con 5V y 220Ω pasan unos 13.9 mA 💡</field>
+                                                          </block>
+                                                        </value>
+                                                        <next>
+                                                          <block type="base_delay" id="?sO@@m8TWjSKQzV+f(WG">
+                                                            <value name="DELAY">
+                                                              <shadow type="math_number" id="`WUZ/HRLCA@42Q;6#+{x">
+                                                                <field name="NUM">0.5</field>
+                                                              </shadow>
+                                                            </value>
+                                                          </block>
+                                                        </next>
+                                                      </block>
+                                                    </statement>
+                                                    <statement name="ELSE">
+                                                      <block type="component_say" id="p#t_{UC?tYq;Rw~#M$v5">
+                                                        <field name="COMP_TYPE">LED</field>
+                                                        <value name="COORD">
+                                                          <shadow type="text" id="uk(`(/auyTWa/)`N.T9p">
+                                                            <field name="TEXT">H14</field>
+                                                          </shadow>
+                                                        </value>
+                                                        <value name="MSG">
+                                                          <block type="text" id="O.pA9]A[~d~Wvb%$^p,e">
+                                                            <field name="TEXT">Poner el interruptor en ON</field>
+                                                          </block>
+                                                        </value>
+                                                        <next>
+                                                          <block type="base_delay" id="r,LjM~Z7[)u{!|_3{]3]">
+                                                            <value name="DELAY">
+                                                              <shadow type="math_number" id=".SN1c/0z!)(y{jBrN]8`">
+                                                                <field name="NUM">0.5</field>
+                                                              </shadow>
+                                                            </value>
+                                                          </block>
+                                                        </next>
+                                                      </block>
+                                                    </statement>
+                                                  </block>
+                                                </statement>
+                                              </block>
+                                            </next>
+                                          </block>
+                                        </next>
+                                      </block>
+                                    </next>
+                                  </block>
+                                </next>
+                              </block>
+                            </next>
+                          </block>
+                        </next>
+                      </block>
+                    </next>
+                  </block>
+                </next>
+              </block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </statement>
+  </block>
+</xml>

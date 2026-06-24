@@ -1,0 +1,301 @@
+<xml xmlns="https://developers.google.com/blockly/xml">
+  <block type="start_execution" deletable="false" x="0" y="0">
+    <statement name="DO">
+
+      <block type="source_connection">
+        <value name="VOLTAGE">
+          <shadow type="source_voltage_dropdown">
+            <field name="VOLTAGE">2</field>
+          </shadow>
+        </value>
+        <value name="VCC_COORD">
+          <shadow type="text">
+            <field name="TEXT">PS20</field>
+          </shadow>
+        </value>
+        <value name="GND_COORD">
+          <shadow type="text">
+            <field name="TEXT">NS14</field>
+          </shadow>
+        </value>
+        <next>
+
+          <!-- ===== RAMA 1: LED ROJO (LED1) — columnas 19-15 ===== -->
+          <block type="jumper">
+            <value name="COLOR">
+              <shadow type="jumper_color_dropdown">
+                <field name="COLOR">1</field>
+              </shadow>
+            </value>
+            <value name="COORD_A">
+              <shadow type="text">
+                <field name="TEXT">PS19</field>
+              </shadow>
+            </value>
+            <value name="COORD_B">
+              <shadow type="text">
+                <field name="TEXT">J19</field>
+              </shadow>
+            </value>
+            <next>
+              <block type="resistor">
+                <value name="VALUE">
+                  <shadow type="math_number">
+                    <field name="NUM">220</field>
+                  </shadow>
+                </value>
+                <value name="COORD_A">
+                  <shadow type="text">
+                    <field name="TEXT">I19</field>
+                  </shadow>
+                </value>
+                <value name="COORD_B">
+                  <shadow type="text">
+                    <field name="TEXT">I17</field>
+                  </shadow>
+                </value>
+                <next>
+                  <block type="led">
+                    <value name="COLOR">
+                      <shadow type="led_color_dropdown">
+                        <field name="COLOR">1</field>
+                      </shadow>
+                    </value>
+                    <value name="ANODE">
+                      <shadow type="text">
+                        <field name="TEXT">H17</field>
+                      </shadow>
+                    </value>
+                    <value name="CATHODE">
+                      <shadow type="text">
+                        <field name="TEXT">H15</field>
+                      </shadow>
+                    </value>
+                    <next>
+                      <block type="jumper">
+                        <value name="COLOR">
+                          <shadow type="jumper_color_dropdown">
+                            <field name="COLOR">2</field>
+                          </shadow>
+                        </value>
+                        <value name="COORD_A">
+                          <shadow type="text">
+                            <field name="TEXT">J15</field>
+                          </shadow>
+                        </value>
+                        <value name="COORD_B">
+                          <shadow type="text">
+                            <field name="TEXT">NS15</field>
+                          </shadow>
+                        </value>
+                        <next>
+
+                          <!-- ===== RAMA 2: LED AMARILLO (LED2) — columnas 12-8 ===== -->
+                          <block type="jumper">
+                            <value name="COLOR">
+                              <shadow type="jumper_color_dropdown">
+                                <field name="COLOR">1</field>
+                              </shadow>
+                            </value>
+                            <value name="COORD_A">
+                              <shadow type="text">
+                                <field name="TEXT">PS12</field>
+                              </shadow>
+                            </value>
+                            <value name="COORD_B">
+                              <shadow type="text">
+                                <field name="TEXT">J12</field>
+                              </shadow>
+                            </value>
+                            <next>
+                              <block type="resistor">
+                                <value name="VALUE">
+                                  <shadow type="math_number">
+                                    <field name="NUM">220</field>
+                                  </shadow>
+                                </value>
+                                <value name="COORD_A">
+                                  <shadow type="text">
+                                    <field name="TEXT">I12</field>
+                                  </shadow>
+                                </value>
+                                <value name="COORD_B">
+                                  <shadow type="text">
+                                    <field name="TEXT">I10</field>
+                                  </shadow>
+                                </value>
+                                <next>
+                                  <block type="led">
+                                    <value name="COLOR">
+                                      <shadow type="led_color_dropdown">
+                                        <field name="COLOR">2</field>
+                                      </shadow>
+                                    </value>
+                                    <value name="ANODE">
+                                      <shadow type="text">
+                                        <field name="TEXT">H10</field>
+                                      </shadow>
+                                    </value>
+                                    <value name="CATHODE">
+                                      <shadow type="text">
+                                        <field name="TEXT">H8</field>
+                                      </shadow>
+                                    </value>
+                                    <next>
+                                      <block type="jumper">
+                                        <value name="COLOR">
+                                          <shadow type="jumper_color_dropdown">
+                                            <field name="COLOR">2</field>
+                                          </shadow>
+                                        </value>
+                                        <value name="COORD_A">
+                                          <shadow type="text">
+                                            <field name="TEXT">J8</field>
+                                          </shadow>
+                                        </value>
+                                        <value name="COORD_B">
+                                          <shadow type="text">
+                                            <field name="TEXT">NS8</field>
+                                          </shadow>
+                                        </value>
+                                        <next>
+
+                                          <!-- ===== RAMA 3: LED VERDE (LED3) — columnas 5-1 ===== -->
+                                          <block type="jumper">
+                                            <value name="COLOR">
+                                              <shadow type="jumper_color_dropdown">
+                                                <field name="COLOR">1</field>
+                                              </shadow>
+                                            </value>
+                                            <value name="COORD_A">
+                                              <shadow type="text">
+                                                <field name="TEXT">PS5</field>
+                                              </shadow>
+                                            </value>
+                                            <value name="COORD_B">
+                                              <shadow type="text">
+                                                <field name="TEXT">J5</field>
+                                              </shadow>
+                                            </value>
+                                            <next>
+                                              <block type="resistor">
+                                                <value name="VALUE">
+                                                  <shadow type="math_number">
+                                                    <field name="NUM">220</field>
+                                                  </shadow>
+                                                </value>
+                                                <value name="COORD_A">
+                                                  <shadow type="text">
+                                                    <field name="TEXT">I5</field>
+                                                  </shadow>
+                                                </value>
+                                                <value name="COORD_B">
+                                                  <shadow type="text">
+                                                    <field name="TEXT">I3</field>
+                                                  </shadow>
+                                                </value>
+                                                <next>
+                                                  <block type="led">
+                                                    <value name="COLOR">
+                                                      <shadow type="led_color_dropdown">
+                                                        <field name="COLOR">3</field>
+                                                      </shadow>
+                                                    </value>
+                                                    <value name="ANODE">
+                                                      <shadow type="text">
+                                                        <field name="TEXT">H3</field>
+                                                      </shadow>
+                                                    </value>
+                                                    <value name="CATHODE">
+                                                      <shadow type="text">
+                                                        <field name="TEXT">H1</field>
+                                                      </shadow>
+                                                    </value>
+                                                    <next>
+                                                      <block type="jumper">
+                                                        <value name="COLOR">
+                                                          <shadow type="jumper_color_dropdown">
+                                                            <field name="COLOR">2</field>
+                                                          </shadow>
+                                                        </value>
+                                                        <value name="COORD_A">
+                                                          <shadow type="text">
+                                                            <field name="TEXT">J1</field>
+                                                          </shadow>
+                                                        </value>
+                                                        <value name="COORD_B">
+                                                          <shadow type="text">
+                                                            <field name="TEXT">NS1</field>
+                                                          </shadow>
+                                                        </value>
+                                                        <next>
+
+                                                          <!-- ===== SECUENCIA DE CÁMARA: paneo tipo dron ===== -->
+
+                                                          <!-- 1. Alejar zoom para ver todo el circuito -->
+                                                          <block type="cam_zoom">
+                                                            <field name="LEVEL">65</field>
+                                                            <next>
+
+                                                              <!-- 2. Subir cámara a vista aérea -->
+                                                              <block type="cam_move_to">
+                                                                <field name="HEIGHT">10.0</field>
+                                                                <next>
+
+                                                                  <!-- 3. Vuelo de dron lento 360° -->
+                                                                  <block type="cam_drone_flight">
+                                                                    <field name="SPEED">12</field>
+                                                                    <value name="DEGREES">
+                                                                      <shadow type="math_number">
+                                                                        <field name="NUM">360</field>
+                                                                      </shadow>
+                                                                    </value>
+                                                                    <next>
+
+                                                                      <!-- 4. Acercar zoom para apreciar los LEDs -->
+                                                                      <block type="cam_zoom">
+                                                                        <field name="LEVEL">35</field>
+                                                                      </block>
+
+                                                                    </next>
+                                                                  </block>
+
+                                                                </next>
+                                                              </block>
+
+                                                            </next>
+                                                          </block>
+
+                                                        </next>
+                                                      </block>
+                                                    </next>
+                                                  </block>
+                                                </next>
+                                              </block>
+                                            </next>
+                                          </block>
+
+                                        </next>
+                                      </block>
+                                    </next>
+                                  </block>
+                                </next>
+                              </block>
+                            </next>
+                          </block>
+
+                        </next>
+                      </block>
+                    </next>
+                  </block>
+                </next>
+              </block>
+            </next>
+          </block>
+
+        </next>
+      </block>
+
+    </statement>
+  </block>
+</xml>
