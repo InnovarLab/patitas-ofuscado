@@ -1,0 +1,347 @@
+<xml xmlns="https://developers.google.com/blockly/xml" zoom="0.463" scrollX="619.657022423499" scrollY="314.5599143453127">
+  <variables>
+    <variable id="LPuyH1`!j;#NiW04Fje7">i</variable>
+    <variable id="VAR_FILA">fila</variable>
+    <variable id="sI`7g_d~DEsl{E[XIelZ">col</variable>
+  </variables>
+  <block type="start_execution" id="START_EXE" deletable="false" x="-1202" y="-662">
+    <statement name="DO">
+      <block type="procedures_callnoreturn" id="0]r.pg%ipt_8n(ijHw*0">
+        <mutation name="Inicializar variables"></mutation>
+        <next>
+          <block type="procedures_callnoreturn" id="_^91Ku8Oi3`0blUV*:C7">
+            <mutation name="Conexión de la fuente"></mutation>
+            <next>
+              <block type="procedures_callnoreturn" id="0?R8L*$rn8t^qHPWjJJ]">
+                <mutation name="LED+R en paralelo"></mutation>
+              </block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </statement>
+  </block>
+  <block type="procedures_defnoreturn" id="E0dzY6z!zu2wwk/.|MD@" x="-963" y="-660">
+    <field name="NAME">Inicializar variables</field>
+    <comment pinned="false" h="80" w="160">Describe esta función...</comment>
+    <statement name="STACK">
+      <block type="variables_set" id="k?f-Xp93R99uuz(Aopi5">
+        <field name="VAR" id="LPuyH1`!j;#NiW04Fje7">i</field>
+        <value name="VALUE">
+          <block type="math_number" id="]%gd5$6L-dIY6Ybm3K0k">
+            <field name="NUM">1</field>
+          </block>
+        </value>
+        <next>
+          <block type="variables_set" id="VAR_SET_FILA">
+            <field name="VAR" id="VAR_FILA">fila</field>
+            <value name="VALUE">
+              <block type="math_number" id="^Mk$bsO!)0]v=y$V`E$T">
+                <field name="NUM">10</field>
+              </block>
+            </value>
+            <next>
+              <block type="variables_set" id="[)a16Z{]Qy^BH0v9xP;(">
+                <field name="VAR" id="sI`7g_d~DEsl{E[XIelZ">col</field>
+                <value name="VALUE">
+                  <block type="math_number" id="NUM_9">
+                    <field name="NUM">19</field>
+                  </block>
+                </value>
+              </block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </statement>
+  </block>
+  <block type="procedures_defnoreturn" id="($D[2R2K[Yym|Y8/q}h}" x="-644" y="-663">
+    <field name="NAME">Conexión de la fuente</field>
+    <comment pinned="false" h="80" w="160">Describe esta función...</comment>
+    <statement name="STACK">
+      <block type="source_connection" id="Di=C@`4?WQ}k$phEtrJe">
+        <value name="VOLTAGE">
+          <shadow type="source_voltage_dropdown" id="3k~w7A~rJeSVLxB}Na8k">
+            <field name="VOLTAGE">2</field>
+          </shadow>
+        </value>
+        <value name="VCC_COORD">
+          <shadow type="text" id="#SDLJR~p=_0iVkkJ9OGJ">
+            <field name="TEXT">PS20</field>
+          </shadow>
+        </value>
+        <value name="GND_COORD">
+          <shadow type="text" id="^ZYi9gA@`u5ha|tbF.P-">
+            <field name="TEXT">NS14</field>
+          </shadow>
+        </value>
+        <next>
+          <block type="switch" id="%7IPy(+@vo)N7I!.+Pym">
+            <value name="STATE">
+              <shadow type="switch_state_dropdown" id=";p[X+C#$dQqeA+kd!k`l">
+                <field name="STATE">2</field>
+              </shadow>
+            </value>
+            <value name="COORD_A">
+              <shadow type="text" id="4|lGLag~MfRUoUYtIaqh">
+                <field name="TEXT">ps19</field>
+              </shadow>
+            </value>
+            <value name="COORD_B">
+              <shadow type="text" id="lQ_Lr;ZSG9dF/HnoI;@A">
+                <field name="TEXT">j19</field>
+              </shadow>
+            </value>
+            <next>
+              <block type="jumper" id="6M!#D?7;Re1Cu8zck*dK">
+                <value name="COLOR">
+                  <shadow type="jumper_color_dropdown" id="^~G,Z_Q#I-wM7ELvmq%d">
+                    <field name="COLOR">2</field>
+                  </shadow>
+                </value>
+                <value name="COORD_A">
+                  <shadow type="text" id="wi%d]7S`fN;-C#`tYs{?">
+                    <field name="TEXT">NS15</field>
+                  </shadow>
+                </value>
+                <value name="COORD_B">
+                  <shadow type="text" id="J~!3u7Q-J?,/u3xiIC;!">
+                    <field name="TEXT">J15</field>
+                  </shadow>
+                </value>
+              </block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </statement>
+  </block>
+  <block type="procedures_defnoreturn" id="[Ee}c#Ig.hX3j7XwR.0s" x="-1167" y="-338">
+    <field name="NAME">LED+R en paralelo</field>
+    <comment pinned="false" h="80" w="160">Describe esta función...</comment>
+    <statement name="STACK">
+      <block type="controls_repeat_ext" id="LOOP_REPEAT">
+        <value name="TIMES">
+          <shadow type="math_number" id="NUM_2">
+            <field name="NUM">3</field>
+          </shadow>
+        </value>
+        <statement name="DO">
+          <block type="resistor" id="RESISTOR_1">
+            <value name="VALUE">
+              <shadow type="math_number" id="NUM_220">
+                <field name="NUM">220</field>
+              </shadow>
+            </value>
+            <value name="COORD_A">
+              <shadow type="text" id="TXT_EMPTY_1">
+                <field name="TEXT"></field>
+              </shadow>
+              <block type="coord_dynamic" id="COORD_DYN_1">
+                <value name="ROW">
+                  <shadow type="letra_fija" id="SHADOW_LETTER_I_1">
+                    <field name="LETTER">I</field>
+                  </shadow>
+                  <block type="letra_nro" id="LETRA_NRO_1">
+                    <value name="NUM">
+                      <shadow type="math_number" id="NUM_1_1">
+                        <field name="NUM">1</field>
+                      </shadow>
+                      <block type="variables_get" id="VAR_GET_FILA_1">
+                        <field name="VAR" id="VAR_FILA">fila</field>
+                      </block>
+                    </value>
+                  </block>
+                </value>
+                <value name="COL">
+                  <shadow type="math_number" id="NUM_19">
+                    <field name="NUM">19</field>
+                  </shadow>
+                  <block type="math_arithmetic" id="Dt}r}J=wB7):*:R(gj4B">
+                    <field name="OP">MINUS</field>
+                    <value name="A">
+                      <block type="variables_get" id="g)68S./{l5PQQGpS9WNX">
+                        <field name="VAR" id="sI`7g_d~DEsl{E[XIelZ">col</field>
+                      </block>
+                    </value>
+                    <value name="B">
+                      <block type="variables_get" id="P_S2/05r3VnH)7b$P4mp">
+                        <field name="VAR" id="LPuyH1`!j;#NiW04Fje7">i</field>
+                      </block>
+                    </value>
+                  </block>
+                </value>
+              </block>
+            </value>
+            <value name="COORD_B">
+              <shadow type="text" id="TXT_EMPTY_2">
+                <field name="TEXT"></field>
+              </shadow>
+              <block type="coord_dynamic" id="COORD_DYN_2">
+                <value name="ROW">
+                  <shadow type="letra_fija" id="SHADOW_LETTER_I_2">
+                    <field name="LETTER">I</field>
+                  </shadow>
+                  <block type="letra_nro" id="LETRA_NRO_2">
+                    <value name="NUM">
+                      <shadow type="math_number" id="NUM_1_2">
+                        <field name="NUM">1</field>
+                      </shadow>
+                      <block type="math_arithmetic" id=",0jgpF?k0q!*xs6;noBK">
+                        <field name="OP">MINUS</field>
+                        <value name="A">
+                          <block type="variables_get" id="VAR_GET_FILA_2">
+                            <field name="VAR" id="VAR_FILA">fila</field>
+                          </block>
+                        </value>
+                        <value name="B">
+                          <block type="variables_get" id="jdXy:hzv=SR=nlD#O:48">
+                            <field name="VAR" id="LPuyH1`!j;#NiW04Fje7">i</field>
+                          </block>
+                        </value>
+                      </block>
+                    </value>
+                  </block>
+                </value>
+                <value name="COL">
+                  <shadow type="math_number" id="NUM_17">
+                    <field name="NUM">19</field>
+                  </shadow>
+                </value>
+              </block>
+            </value>
+            <next>
+              <block type="led" id="pJF7)KBMmvaPb((#?I|u">
+                <value name="COLOR">
+                  <shadow type="led_color_dropdown" id="jWX_[.zU]Y@U+hvIjyG2">
+                    <field name="COLOR">1</field>
+                  </shadow>
+                  <block type="variables_get" id="K^@MOI`FaL3hA7?S3^4[">
+                    <field name="VAR" id="LPuyH1`!j;#NiW04Fje7">i</field>
+                  </block>
+                </value>
+                <value name="ANODE">
+                  <shadow type="text" id="Q}S6l4A*Yb@Znlz@g@$[">
+                    <field name="TEXT">A5</field>
+                  </shadow>
+                  <block type="coord_dynamic" id="COORD_DYN_3">
+                    <value name="ROW">
+                      <shadow type="letra_fija" id="SHADOW_LETTER_I_3">
+                        <field name="LETTER">I</field>
+                      </shadow>
+                      <block type="letra_nro" id="LETRA_NRO_3">
+                        <value name="NUM">
+                          <shadow type="math_number" id="NUM_1_3">
+                            <field name="NUM">1</field>
+                          </shadow>
+                          <block type="math_arithmetic" id="MATH_SUB_1">
+                            <field name="OP">MINUS</field>
+                            <value name="A">
+                              <block type="variables_get" id="VAR_GET_FILA_3">
+                                <field name="VAR" id="VAR_FILA">fila</field>
+                              </block>
+                            </value>
+                            <value name="B">
+                              <block type="math_arithmetic" id="V}RBhsa01HKf%D_erhct">
+                                <field name="OP">ADD</field>
+                                <value name="A">
+                                  <block type="variables_get" id="Tnu4`H@rHX$%nY5QQw+F">
+                                    <field name="VAR" id="LPuyH1`!j;#NiW04Fje7">i</field>
+                                  </block>
+                                </value>
+                                <value name="B">
+                                  <block type="math_number" id="YVQzp4QS+Ta*!w#=$5x#">
+                                    <field name="NUM">1</field>
+                                  </block>
+                                </value>
+                              </block>
+                            </value>
+                          </block>
+                        </value>
+                      </block>
+                    </value>
+                    <value name="COL">
+                      <shadow type="math_number" id="NUM_17_2">
+                        <field name="NUM">17</field>
+                      </shadow>
+                      <block type="math_arithmetic" id="0(r*r5sN;iJ`84j)Hb)5">
+                        <field name="OP">MINUS</field>
+                        <value name="A">
+                          <block type="variables_get" id="mQjBh#-JT:ClpxwO]]$P">
+                            <field name="VAR" id="sI`7g_d~DEsl{E[XIelZ">col</field>
+                          </block>
+                        </value>
+                        <value name="B">
+                          <block type="variables_get" id="C0;piVXoAF=A._WByu0R">
+                            <field name="VAR" id="LPuyH1`!j;#NiW04Fje7">i</field>
+                          </block>
+                        </value>
+                      </block>
+                    </value>
+                  </block>
+                </value>
+                <value name="CATHODE">
+                  <shadow type="text" id="otR24QwyEQ7R!U;.jdpy">
+                    <field name="TEXT">A1</field>
+                  </shadow>
+                  <block type="coord_dynamic" id="COORD_DYN_4">
+                    <value name="ROW">
+                      <shadow type="letra_fija" id="SHADOW_LETTER_I_4">
+                        <field name="LETTER">I</field>
+                      </shadow>
+                      <block type="letra_nro" id="LETRA_NRO_4">
+                        <value name="NUM">
+                          <shadow type="math_number" id="NUM_1_5">
+                            <field name="NUM">1</field>
+                          </shadow>
+                          <block type="math_arithmetic" id="MATH_SUB_2">
+                            <field name="OP">MINUS</field>
+                            <value name="A">
+                              <block type="variables_get" id="VAR_GET_FILA_4">
+                                <field name="VAR" id="VAR_FILA">fila</field>
+                              </block>
+                            </value>
+                            <value name="B">
+                              <block type="math_arithmetic" id="%rj`[/+o(Y607Q=C/cle">
+                                <field name="OP">ADD</field>
+                                <value name="A">
+                                  <block type="variables_get" id="6ERVjeE}=O0bOKB~F$kg">
+                                    <field name="VAR" id="LPuyH1`!j;#NiW04Fje7">i</field>
+                                  </block>
+                                </value>
+                                <value name="B">
+                                  <block type="math_number" id=":q_zQ+abAC9QQ_`;a`L+">
+                                    <field name="NUM">1</field>
+                                  </block>
+                                </value>
+                              </block>
+                            </value>
+                          </block>
+                        </value>
+                      </block>
+                    </value>
+                    <value name="COL">
+                      <shadow type="math_number" id="NUM_15">
+                        <field name="NUM">15</field>
+                      </shadow>
+                    </value>
+                  </block>
+                </value>
+                <next>
+                  <block type="math_change" id="KCH%P4o9){/FZGKMn^KQ">
+                    <field name="VAR" id="LPuyH1`!j;#NiW04Fje7">i</field>
+                    <value name="DELTA">
+                      <shadow type="math_number" id="*X-C)tm;(^btFzMikl:7">
+                        <field name="NUM">1</field>
+                      </shadow>
+                    </value>
+                  </block>
+                </next>
+              </block>
+            </next>
+          </block>
+        </statement>
+      </block>
+    </statement>
+  </block>
+</xml>
