@@ -19,6 +19,11 @@
             })();
         });
     }
+    function ensureVisible() {
+        if (typeof window.patitasSetVisible === 'function') {
+            window.patitasSetVisible(true);
+        }
+    }
     function findModel() {
         const panel = document.getElementById('video-tutor-panel');
         if (!panel) return null;
@@ -57,6 +62,7 @@
             return waitForCore().then(() => new Promise(r => setTimeout(r, 500)));
         },
         say(text, opts) {
+            ensureVisible();
             return new Promise(resolve => {
                 const fn = window.patitasVideoTutorVoice;
                 if (typeof fn === 'function') {
@@ -79,6 +85,7 @@
             });
         },
         wait(seconds) {
+            ensureVisible();
             return new Promise(r => setTimeout(r, seconds * 1000));
         },
         waitKey(keyName) {
@@ -95,6 +102,7 @@
             });
         },
         moveTo(x, y, z, durationMs) {
+            ensureVisible();
             durationMs = durationMs || 1000;
             const m = findModel();
             if (!m) return Promise.resolve();
@@ -105,18 +113,21 @@
             ]);
         },
         rotateTo(deg, durationMs) {
+            ensureVisible();
             durationMs = durationMs || 1000;
             const m = findModel();
             if (!m) return Promise.resolve();
             return animateSlider(m.sliderR, deg, durationMs);
         },
         scaleTo(s, durationMs) {
+            ensureVisible();
             durationMs = durationMs || 600;
             const m = findModel();
             if (!m) return Promise.resolve();
             return animateSlider(m.sliderS, s, durationMs);
         },
         show(fadeMs) {
+            ensureVisible();
             fadeMs = fadeMs || 600;
             const m = findModel();
             if (!m) return Promise.resolve();
@@ -129,6 +140,7 @@
             return animateSlider(m.sliderS, 0, fadeMs);
         },
         playAnim(name, fadeMs) {
+            ensureVisible();
             return new Promise(resolve => {
                 if (!name) { resolve(false); return; }
                 if (name === 'reverencia') {

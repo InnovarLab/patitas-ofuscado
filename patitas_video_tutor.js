@@ -10,10 +10,7 @@
     if (typeof window.PVT_MS_PER_CHAR !== 'number') window.PVT_MS_PER_CHAR = 100;
     const GLB_BASE = 'Tutor Patitas 3D/';
     const MODEL_PATHS = {
-        mandibula: 'Patitas_Mandibula_Multi.glb',
-        dance:     GLB_BASE + 'Meshy_AI_Cheerful_Red_Beacon_M_biped_Animation_All_Night_Dance_withSkin.glb',
-        walk:      GLB_BASE + 'Meshy_AI_Cheerful_Red_Beacon_M_biped_Animation_Walking_withSkin.glb',
-        run:       GLB_BASE + 'Meshy_AI_Cheerful_Red_Beacon_M_biped_Animation_Running_withSkin.glb'
+        mandibula: 'Patitas_Mandibula_Multi.glb'
     };
     window.PATITAS_GLB_MODELS = MODEL_PATHS;
     function loadScript(src, cb) {
@@ -330,7 +327,8 @@
         Object.assign(stage.style, {
             position: 'fixed', left: '0', top: '0',
             width: '100vw', height: '100vh',
-            zIndex: '99999', background: 'transparent', pointerEvents: 'none'
+            zIndex: '99999', background: 'transparent', pointerEvents: 'none',
+            display: 'none'
         });
         document.body.appendChild(stage);
         const hint = document.createElement('div');
@@ -674,7 +672,12 @@
             renderer.domElement.style.cursor = on ? (dragging ? 'grabbing' : 'grab') : 'default';
             hint.style.display = on ? 'block' : 'none';
         }
-        let patitasVisible = true;
+        let patitasVisible = false;
+        window.patitasSetVisible = function(visible) {
+            patitasVisible = visible;
+            stage.style.display = patitasVisible ? 'block' : 'none';
+            if (typeof bubble !== 'undefined') bubble.style.visibility = patitasVisible ? 'visible' : 'hidden';
+        };
         function _handleKeyDown(e) {
             if (e.ctrlKey && e.altKey && e.key.toLowerCase() === 'p') {
                 patitasVisible = !patitasVisible;
