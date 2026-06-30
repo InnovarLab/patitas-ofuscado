@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Feedback — Patitas 3D 2.0</title>
+<style>
+    /* ════════════════════════════════════════════════════════════════
+       Formulario de Feedback de Patitas 3D — se embebe en index.html
+       (iframe #feedbackFrame). Envía las respuestas a un Google Sheet
+       mediante un Web App de Google Apps Script.
+       ════════════════════════════════════════════════════════════════ */
+    :root {
+        --bg1: #0c1019;
+        --bg2: #121826;
+        --card: rgba(28, 34, 48, 0.72);
+        --accent: #f1c40f;
+        --accent2: #f39c12;
+        --text: #ecf0f1;
+        --text-dim: #9aa6b2;
+        --border: rgba(255, 255, 255, 0.12);
+        --ok: #2ecc71;
+        --err: #e74c3c;
+        --font: 'Segoe UI', 'Inter', system-ui, -apple-system, sans-serif;
+    }
+    * , *::before, *::after { box-sizing: border-box; }
+    html, body {
+        margin: 0; padding: 0; min-height: 100%;
+        font-family: var(--font);
+        color: var(--text);
+        background:
+            radial-gradient(1200px 500px at 80% -10%, rgba(241,196,15,0.10), transparent 60%),
+            linear-gradient(160deg, var(--bg1), var(--bg2));
+    }
+    body { padding: 22px 16px 28px; display: flex; justify-content: center; }
+
+    .fb-card {
+        width: 100%; max-width: 560px;
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        padding: 26px 26px 22px;
+        box-shadow: 0 18px 50px rgba(0,0,0,0.45), 0 0 0 1px rgba(255,255,255,0.03) inset;
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+    }
+    .fb-head { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
+    .fb-paw {
+        width: 40px; height: 40px; flex: 0 0 auto;
+        background: radial-gradient(circle at 35% 30%, #ff7a59, #e8412a 70%);
+        border-radius: 50%;
+        display: flex; align-items: center; justify-content: center;
+        font-size: 20px; box-shadow: 0 6px 16px rgba(232,65,42,0.4);
+    }
+    .fb-title { font-size: 1.18rem; font-weight: 800; letter-spacing: .2px; }
+    .fb-sub { color: var(--text-dim); font-size: .9rem; margin: 0 0 18px; }
+
+    .fb-field { margin-bottom: 16px; }
+    .fb-label { display: block; font-size: .82rem; font-weight: 700; color: #cdd6df; margin-bottom: 8px; }
+    .fb-label .req { color: var(--accent); }
+    .fb-hint { font-weight: 400; color: var(--text-dim); font-size: .78rem; }
+
+    /* Estrellas */
+    .fb-stars { display: inline-flex; gap: 6px; font-size: 30px; line-height: 1; }
+    .fb-star { cursor: pointer; color: #44505f; transition: transform .12s, color .12s; user-select: none; }
+    .fb-star:hover { transform: scale(1.15); }
+    .fb-star.on { color: var(--accent); text-shadow: 0 0 12px rgba(241,196,15,0.55); }
+
+    /* Pills (tipo) */
+    .fb-pills { display: flex; flex-wrap: wrap; gap: 8px; }
+    .fb-pill {
+        padding: 9px 14px; border-radius: 999px;
+        border: 1px solid var(--border); background: rgba(255,255,255,0.04);
+        color: #cdd6df; font-size: .85rem; font-weight: 600; cursor: pointer;
+        transition: all .15s; white-space: nowrap;
+    }
+    .fb-pill:hover { border-color: rgba(241,196,15,0.5); color: #fff; }
+    .fb-pill.on {
+        background: linear-gradient(135deg, var(--accent), var(--accent2));
+        color: #1a1a1a; border-color: transparent; box-shadow: 0 6px 16px rgba(241,196,15,0.25);
+    }
+
+    /* Inputs */
+    .fb-input, .fb-select, .fb-textarea {
+        width: 100%; padding: 12px 14px;
+        background: rgba(0,0,0,0.28);
+        border: 1px solid var(--border);
+        border-radius: 12px; color: var(--text);
+        font-size: .95rem; font-family: inherit;
+        transition: border-color .15s, box-shadow .15s, background .15s;
+    }
+    .fb-textarea { resize: vertical; min-height: 110px; }
+    .fb-input::placeholder, .fb-textarea::placeholder { color: #6b7785; }
+    .fb-input:focus, .fb-select:focus, .fb-textarea:focus {
+        outline: none; border-color: var(--accent);
+        box-shadow: 0 0 0 3px rgba(241,196,15,0.18); background: rgba(0,0,0,0.36);
+    }
+    .fb-select option { background: #161c28; color: var(--text); }
+    .fb-row { display: flex; gap: 12px; }
+    .fb-row .fb-field { flex: 1; }
+
+    .fb-submit {
+        width: 100%; margin-top: 6px; padding: 14px 18px;
+        border: none; border-radius: 14px; cursor: pointer;
+        background: linear-gradient(135deg, var(--accent), var(--accent2));
+        color: #1a1a1a; font-size: 1rem; font-weight: 800; letter-spacing: .3px;
+        box-shadow: 0 10px 26px rgba(241,196,15,0.28); transition: transform .12s, filter .12s;
+    }
+    .fb-submit:hover { transform: translateY(-2px); filter: brightness(1.05); }
+    .fb-submit:disabled { opacity: .6; cursor: default; transform: none; }
+
+    .fb-msg { margin-top: 12px; font-size: .88rem; text-align: center; min-height: 20px; }
+    .fb-msg.ok { color: var(--ok); }
+    .fb-msg.err { color: var(--err); }
+
+    /* Estado de éxito */
+    .fb-success { text-align: center; padding: 24px 8px; animation: pop .5s ease-out; }
+    .fb-success .big { font-size: 52px; margin-bottom: 8px; }
+    .fb-success h3 { margin: 0 0 6px; font-size: 1.3rem; }
+    .fb-success p { color: var(--text-dim); margin: 0 0 18px; }
+    .fb-again {
+        padding: 10px 18px; border-radius: 12px; cursor: pointer;
+        border: 1px solid var(--border); background: rgba(255,255,255,0.06); color: var(--text);
+        font-weight: 600; font-family: inherit;
+    }
+    .fb-again:hover { border-color: rgba(241,196,15,0.5); }
+    @keyframes pop { from { opacity: 0; transform: scale(.92); } to { opacity: 1; transform: scale(1); } }
+    .hidden { display: none !important; }
+</style>
+</head>
+<body>
+<div class="fb-card">
+
+    <!-- FORMULARIO -->
+    <form id="fbForm" novalidate>
+        <div class="fb-head">
+            <div class="fb-paw">🐾</div>
+            <div class="fb-title">Contanos qué te pareció Patitas 3D</div>
+        </div>
+        <p class="fb-sub">Tu opinión nos ayuda a mejorar. Te lleva menos de un minuto.</p>
+
+        <div class="fb-field">
+            <label class="fb-label">Valoración general</label>
+            <div class="fb-stars" id="fbStars" role="radiogroup" aria-label="Valoración">
+                <span class="fb-star" data-v="1" title="1 — Muy floja">★</span>
+                <span class="fb-star" data-v="2" title="2">★</span>
+                <span class="fb-star" data-v="3" title="3">★</span>
+                <span class="fb-star" data-v="4" title="4">★</span>
+                <span class="fb-star" data-v="5" title="5 — Excelente">★</span>
+            </div>
+            <input type="hidden" id="fbRating" value="">
+        </div>
+
+        <div class="fb-field">
+            <label class="fb-label">Tipo de comentario</label>
+            <div class="fb-pills" id="fbTipo">
+                <button type="button" class="fb-pill" data-v="🐞 Error">🐞 Error</button>
+                <button type="button" class="fb-pill" data-v="💡 Sugerencia">💡 Sugerencia</button>
+                <button type="button" class="fb-pill" data-v="❤️ Me gustó">❤️ Me gustó</button>
+                <button type="button" class="fb-pill" data-v="💬 Otro">💬 Otro</button>
+            </div>
+            <input type="hidden" id="fbTipoVal" value="">
+        </div>
+
+        <div class="fb-field">
+            <label class="fb-label" for="fbSeccion">¿Sobre qué parte?</label>
+            <select id="fbSeccion" class="fb-select">
+                <option value="">Elegí una opción…</option>
+                <option>Simulador (protoboard 3D)</option>
+                <option>Lecciones / Misiones</option>
+                <option>Avatar Patitas (tutor)</option>
+                <option>Calculadora</option>
+                <option>Editor PCB</option>
+                <option>La web en general</option>
+                <option>Otro</option>
+            </select>
+        </div>
+
+        <div class="fb-row">
+            <div class="fb-field">
+                <label class="fb-label" for="fbNombre">Nombre <span class="fb-hint">(opcional)</span></label>
+                <input id="fbNombre" class="fb-input" type="text" placeholder="Tu nombre" autocomplete="name">
+            </div>
+            <div class="fb-field">
+                <label class="fb-label" for="fbEmail">Email <span class="fb-hint">(opcional)</span></label>
+                <input id="fbEmail" class="fb-input" type="email" placeholder="para responderte" autocomplete="email">
+            </div>
+        </div>
+
+        <div class="fb-field">
+            <label class="fb-label" for="fbMensaje">Tu mensaje <span class="req">*</span></label>
+            <textarea id="fbMensaje" class="fb-textarea" placeholder="Contanos qué te gustó, qué mejorarías o qué error encontraste…" required></textarea>
+        </div>
+
+        <button type="submit" class="fb-submit" id="fbSubmit">Enviar feedback 🚀</button>
+        <div class="fb-msg" id="fbMsg"></div>
+    </form>
+
+    <!-- ÉXITO -->
+    <div class="fb-success hidden" id="fbSuccess">
+        <div class="big">🐾</div>
+        <h3>¡Gracias por tu feedback!</h3>
+        <p>Lo recibimos. Nos ayuda muchísimo a mejorar Patitas 3D.</p>
+        <button class="fb-again" id="fbAgain">Enviar otro</button>
+    </div>
+
+</div>
+
+<script>
+(function () {
+    'use strict';
+
+    /* ════════════════════════════════════════════════════════════════
+       ⚙️  CONFIGURACIÓN — pegá acá la URL del Web App de Apps Script.
+       (Ver instrucciones al pie de este archivo o las que te pasó Claude.)
+       Ejemplo: 'https://script.google.com/macros/s/AKfyc.../exec'
+       ════════════════════════════════════════════════════════════════ */
+    const ENDPOINT = '';
+
+    const $ = (id) => document.getElementById(id);
+    const form    = $('fbForm');
+    const success = $('fbSuccess');
+    const msg     = $('fbMsg');
+    const submit  = $('fbSubmit');
+
+    // ── Estrellas ──────────────────────────────────────────────
+    const stars = Array.prototype.slice.call(document.querySelectorAll('.fb-star'));
+    const ratingInput = $('fbRating');
+    let rating = 0;
+    function paintStars(n) {
+        stars.forEach((s, i) => s.classList.toggle('on', i < n));
+    }
+    stars.forEach((s) => {
+        const v = parseInt(s.dataset.v, 10);
+        s.addEventListener('mouseenter', () => paintStars(v));
+        s.addEventListener('click', () => { rating = v; ratingInput.value = v; paintStars(v); });
+    });
+    $('fbStars').addEventListener('mouseleave', () => paintStars(rating));
+
+    // ── Pills de tipo ──────────────────────────────────────────
+    const tipoInput = $('fbTipoVal');
+    Array.prototype.slice.call(document.querySelectorAll('#fbTipo .fb-pill')).forEach((p) => {
+        p.addEventListener('click', () => {
+            document.querySelectorAll('#fbTipo .fb-pill').forEach(x => x.classList.remove('on'));
+            p.classList.add('on');
+            tipoInput.value = p.dataset.v;
+        });
+    });
+
+    function setMsg(text, kind) {
+        msg.textContent = text || '';
+        msg.className = 'fb-msg' + (kind ? ' ' + kind : '');
+    }
+
+    // ── Envío ──────────────────────────────────────────────────
+    form.addEventListener('submit', async function (e) {
+        e.preventDefault();
+        const mensaje = $('fbMensaje').value.trim();
+        if (!mensaje) { setMsg('Escribí un mensaje antes de enviar 🙂', 'err'); $('fbMensaje').focus(); return; }
+        const email = $('fbEmail').value.trim();
+        if (email && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) { setMsg('Revisá el email (parece inválido).', 'err'); return; }
+
+        if (!ENDPOINT) {
+            setMsg('⚠️ Falta configurar el endpoint de Google Sheets en contacto.html (variable ENDPOINT).', 'err');
+            return;
+        }
+
+        const data = {
+            fecha:    new Date().toISOString(),
+            rating:   rating || '',
+            tipo:     tipoInput.value || '',
+            seccion:  $('fbSeccion').value || '',
+            nombre:   $('fbNombre').value.trim() || '',
+            email:    email || '',
+            mensaje:  mensaje,
+            ua:       navigator.userAgent
+        };
+
+        submit.disabled = true;
+        submit.textContent = 'Enviando…';
+        setMsg('', '');
+
+        try {
+            // text/plain evita el preflight CORS; Apps Script lee e.postData.contents.
+            await fetch(ENDPOINT, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                body: JSON.stringify(data)
+            });
+            // Con no-cors la respuesta es opaca: si no hubo error de red, asumimos OK.
+            form.classList.add('hidden');
+            success.classList.remove('hidden');
+        } catch (err) {
+            console.error('[Feedback] error de envío:', err);
+            setMsg('No se pudo enviar. Revisá tu conexión e intentá de nuevo.', 'err');
+            submit.disabled = false;
+            submit.textContent = 'Enviar feedback 🚀';
+        }
+    });
+
+    // ── "Enviar otro" ──────────────────────────────────────────
+    $('fbAgain').addEventListener('click', function () {
+        form.reset();
+        rating = 0; ratingInput.value = ''; paintStars(0);
+        tipoInput.value = '';
+        document.querySelectorAll('#fbTipo .fb-pill').forEach(x => x.classList.remove('on'));
+        submit.disabled = false; submit.textContent = 'Enviar feedback 🚀';
+        setMsg('', '');
+        success.classList.add('hidden');
+        form.classList.remove('hidden');
+    });
+})();
+</script>
+
+<!--
+  ════════════════════════════════════════════════════════════════════
+  CÓMO CONECTARLO A TU GOOGLE SHEET (Apps Script Web App)
+  ════════════════════════════════════════════════════════════════════
+  1) Creá una Google Sheet. En la fila 1 poné estos encabezados:
+        Fecha | Valoración | Tipo | Sección | Nombre | Email | Mensaje | Navegador
+  2) En la Sheet: menú  Extensiones → Apps Script.
+  3) Borrá lo que haya y pegá ESTE código:
+
+        function doPost(e) {
+          try {
+            var hoja = SpreadsheetApp.getActiveSpreadsheet().getSheets()[0];
+            var d = JSON.parse(e.postData.contents);
+            hoja.appendRow([
+              new Date(),
+              d.rating || '', d.tipo || '', d.seccion || '',
+              d.nombre || '', d.email || '', d.mensaje || '', d.ua || ''
+            ]);
+            return ContentService.createTextOutput(JSON.stringify({ok:true}))
+                                 .setMimeType(ContentService.MimeType.JSON);
+          } catch (err) {
+            return ContentService.createTextOutput(JSON.stringify({ok:false, error:String(err)}))
+                                 .setMimeType(ContentService.MimeType.JSON);
+          }
+        }
+
+  4) Guardá. Luego:  Implementar → Nueva implementación → tipo "Aplicación web".
+        - Ejecutar como:  Yo
+        - Quién tiene acceso:  Cualquier persona
+        Implementá y autorizá los permisos. Copiá la URL que termina en /exec.
+  5) Pegá esa URL arriba en   const ENDPOINT = '...';
+  6) Volvé a publicar la web. ¡Listo!
+  ════════════════════════════════════════════════════════════════════
+-->
+</body>
+</html>
