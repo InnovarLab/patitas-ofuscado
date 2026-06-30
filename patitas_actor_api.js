@@ -628,23 +628,22 @@
                 const st = document.createElement('style');
                 st.id = 'patitas-flashcard-style';
                 st.textContent =
-                    '#patitas-flashcard-overlay{position:fixed;inset:0;z-index:200001;display:flex;align-items:center;justify-content:center;background:rgba(13,20,33,0.46);pointer-events:auto;font-family:"Segoe UI",Tahoma,Geneva,Verdana,sans-serif;}'
-                  + '.pfc-wrap{display:flex;flex-direction:column;align-items:center;gap:14px;max-width:92vw;perspective:1200px;}'
+                    '#patitas-flashcard-overlay{position:fixed;inset:0;z-index:200001;display:flex;align-items:flex-end;justify-content:center;background:rgba(13,20,33,0.46);pointer-events:auto;font-family:"Segoe UI",Tahoma,Geneva,Verdana,sans-serif;padding-bottom:5vh;box-sizing:border-box;}'
+                  + '.pfc-wrap{display:flex;flex-direction:column;align-items:center;gap:14px;max-width:96vw;perspective:1400px;}'
                   + '.pfc-progress{color:#fff;font-weight:bold;font-size:1rem;text-shadow:0 1px 4px #000;}'
-                  + '.pfc-card{width:min(440px,86vw);min-height:280px;position:relative;transform-style:preserve-3d;transition:transform .6s cubic-bezier(.2,.7,.2,1);cursor:pointer;}'
+                  + '.pfc-card{width:min(560px,94vw);min-height:380px;position:relative;transform-style:preserve-3d;transition:transform .85s ease-in-out;cursor:pointer;}'
                   + '.pfc-card.pfc-flipped{transform:rotateY(180deg);}'
-                  + '.pfc-face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:18px;background:linear-gradient(160deg,rgba(40,53,75,0.95),rgba(21,29,46,0.96));color:#eaf0f7;border:1px solid rgba(255,255,255,0.18);box-shadow:0 18px 48px rgba(0,0,0,.55),0 0 28px rgba(241,196,15,.14),inset 0 1px 0 rgba(255,255,255,.08);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:22px;box-sizing:border-box;text-align:center;}'
+                  + '.pfc-face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:18px;background:linear-gradient(160deg,rgba(40,53,75,0.95),rgba(21,29,46,0.96));color:#eaf0f7;border:1px solid rgba(255,255,255,0.18);box-shadow:-16px -16px 36px rgba(0,0,0,.5),0 10px 24px rgba(0,0,0,.4),0 0 26px rgba(241,196,15,.12),inset 0 1px 0 rgba(255,255,255,.08);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:26px;box-sizing:border-box;text-align:center;}'
                   + '.pfc-back{transform:rotateY(180deg);background:linear-gradient(160deg,rgba(28,57,53,0.95),rgba(16,35,33,0.96));}'
-                  + '.pfc-tag{position:absolute;top:10px;left:14px;font-size:.72rem;font-weight:bold;letter-spacing:.5px;color:rgba(255,255,255,.45);}'
-                  + '.pfc-img{max-width:100%;max-height:175px;object-fit:contain;border-radius:8px;box-shadow:0 6px 18px rgba(0,0,0,.45);}'
-                  + '.pfc-text{font-size:1.15rem;color:#eaf0f7;font-weight:600;line-height:1.35;}'
+                  + '.pfc-img{max-width:100%;max-height:240px;object-fit:contain;border-radius:8px;box-shadow:0 6px 18px rgba(0,0,0,.45);}'
+                  + '.pfc-text{font-size:1.2rem;color:#eaf0f7;font-weight:600;line-height:1.38;}'
                   + '.pfc-back .pfc-text{font-weight:500;color:#a9f0cf;}'
                   + '.pfc-hint{font-size:.8rem;color:rgba(255,255,255,.42);}'
-                  + '.pfc-actions{display:flex;gap:12px;align-items:center;flex-wrap:wrap;justify-content:center;}'
+                  + '.pfc-actions{display:flex;gap:12px;align-items:center;flex-wrap:wrap;justify-content:center;min-height:44px;}'
                   + '.pfc-ask{color:#fff;font-weight:bold;font-size:1.05rem;text-shadow:0 1px 4px #000;}'
                   + '.pfc-btn{border:none;border-radius:10px;padding:10px 18px;font-size:1rem;font-weight:bold;cursor:pointer;font-family:inherit;box-shadow:0 3px 8px rgba(0,0,0,.3);}'
-                  + '.pfc-flip{background:#f1c40f;color:#222;}.pfc-yes{background:#27ae60;color:#fff;}.pfc-no{background:#c0392b;color:#fff;}.pfc-close{background:#2980b9;color:#fff;}'
-                  + '.pfc-summary{display:flex;flex-direction:column;align-items:center;gap:16px;background:linear-gradient(160deg,rgba(40,53,75,0.95),rgba(21,29,46,0.96));color:#eaf0f7;border:1px solid rgba(255,255,255,0.18);padding:30px 40px;border-radius:18px;box-shadow:0 18px 48px rgba(0,0,0,.55),0 0 28px rgba(241,196,15,.14);}'
+                  + '.pfc-yes{background:#27ae60;color:#fff;}.pfc-no{background:#c0392b;color:#fff;}.pfc-close{background:#2980b9;color:#fff;}'
+                  + '.pfc-summary{display:flex;flex-direction:column;align-items:center;gap:16px;background:linear-gradient(160deg,rgba(40,53,75,0.95),rgba(21,29,46,0.96));color:#eaf0f7;border:1px solid rgba(255,255,255,0.18);padding:30px 40px;border-radius:18px;box-shadow:-16px -16px 36px rgba(0,0,0,.5),0 10px 24px rgba(0,0,0,.4),0 0 26px rgba(241,196,15,.12);}'
                   + '.pfc-summary-title{font-size:1.4rem;font-weight:bold;color:#fff;}.pfc-summary-score{font-size:1.15rem;color:#7ef0c0;font-weight:bold;}';
                 document.head.appendChild(st);
             }
@@ -666,39 +665,40 @@
                 ov.innerHTML =
                     '<div class="pfc-wrap">'
                   + '<div class="pfc-progress">Tarjeta ' + (i + 1) + ' de ' + cards.length + '</div>'
-                  + '<div class="pfc-card' + (flipped ? ' pfc-flipped' : '') + '">'
-                  +   '<div class="pfc-face pfc-front"><span class="pfc-tag">FRENTE</span>'
+                  + '<div class="pfc-card">'
+                  +   '<div class="pfc-face pfc-front">'
                   +     (card.frontImg ? '<img class="pfc-img" src="' + card.frontImg + '">' : '')
                   +     '<div class="pfc-text">' + esc(card.frontText) + '</div>'
-                  +     (flipped ? '' : '<div class="pfc-hint">(tocá la tarjeta para voltear)</div>')
                   +   '</div>'
-                  +   '<div class="pfc-face pfc-back"><span class="pfc-tag">DORSO</span>'
+                  +   '<div class="pfc-face pfc-back">'
                   +     (card.backImg ? '<img class="pfc-img" src="' + card.backImg + '">' : '')
                   +     '<div class="pfc-text">' + esc(card.backText) + '</div>'
                   +   '</div>'
                   + '</div>'
-                  + '<div class="pfc-actions"></div>'
+                  + '<div class="pfc-actions"><div class="pfc-hint">(tocá la tarjeta para voltear)</div></div>'
                   + '</div>';
-                const actions = ov.querySelector('.pfc-actions');
                 const cardEl = ov.querySelector('.pfc-card');
-                if (!flipped) {
-                    cardEl.onclick = flip;
-                    const b = document.createElement('button');
-                    b.className = 'pfc-btn pfc-flip'; b.textContent = '🔄 Voltear';
-                    b.onclick = function (e) { e.stopPropagation(); flip(); };
-                    actions.appendChild(b);
-                    speakQuestion(card.frontText);
-                } else {
+                cardEl.onclick = flip;
+                speakQuestion(card.frontText);
+            }
+            function flip() {
+                const cardEl = ov.querySelector('.pfc-card');
+                if (!cardEl || cardEl.classList.contains('pfc-flipped')) return;
+                cardEl.classList.add('pfc-flipped'); // alterna la clase sobre el elemento existente → la transición CSS anima el giro
+                cardEl.onclick = null;
+                setTimeout(function () {
+                    const actions = ov.querySelector('.pfc-actions');
+                    if (!actions) return;
+                    actions.innerHTML = '';
                     const ask = document.createElement('div'); ask.className = 'pfc-ask'; ask.textContent = '¿La sabías?';
                     const yes = document.createElement('button'); yes.className = 'pfc-btn pfc-yes'; yes.textContent = '👍 Sí';
                     const no = document.createElement('button'); no.className = 'pfc-btn pfc-no'; no.textContent = '👎 No';
                     yes.onclick = function (e) { e.stopPropagation(); known++; next(); };
                     no.onclick = function (e) { e.stopPropagation(); next(); };
                     actions.appendChild(ask); actions.appendChild(yes); actions.appendChild(no);
-                }
+                }, 880);
             }
-            function flip() { if (flipped) return; flipped = true; render(); }
-            function next() { i++; flipped = false; if (i >= cards.length) summary(); else render(); }
+            function next() { i++; if (i >= cards.length) summary(); else render(); }
             function summary() {
                 ov.innerHTML = '<div class="pfc-wrap"><div class="pfc-summary">'
                   + '<div class="pfc-summary-title">¡Terminaste el repaso!</div>'

@@ -228,6 +228,8 @@
             if (!file) return;
             const reader = new FileReader();
             reader.onload = function (e) {
+                // Los GIF se conservan tal cual para no perder la animación (no pasan por canvas).
+                if (file.type === 'image/gif') { cb(e.target.result); return; }
                 const img = new Image();
                 img.onload = function () {
                     let w = img.width, h = img.height;
