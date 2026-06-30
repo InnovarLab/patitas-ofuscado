@@ -341,6 +341,28 @@
             }
             transformAnimId = requestAnimationFrame(animateTransform);
         };
+        let scaleAnimId = null;
+        window.patitasGetScale = function () {
+            return currentModel ? currentModel.scale.x : 1;
+        };
+        window.patitasSetScale = function (s, durationMs) {
+            if (!currentModel || typeof s !== 'number') return;
+            if (scaleAnimId) cancelAnimationFrame(scaleAnimId);
+            if (!durationMs || durationMs <= 0) {
+                currentModel.scale.set(s, s, s);
+                return;
+            }
+            const startS = currentModel.scale.x;
+            const startTime = performance.now();
+            function animateScale(now) {
+                const t = Math.min(1, (now - startTime) / durationMs);
+                const ease = t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
+                const v = startS + (s - startS) * ease;
+                currentModel.scale.set(v, v, v);
+                if (t < 1) scaleAnimId = requestAnimationFrame(animateScale);
+            }
+            scaleAnimId = requestAnimationFrame(animateScale);
+        };
         loadModel(MODEL_PATHS.mandibula);
         const bubble = document.createElement('div');
         Object.assign(bubble.style, {
@@ -419,6 +441,12 @@
             });
         }
         window.patitasVideoTutorVoice = speakWithAnimation;
+        let patitasVisible = false;
+        window.patitasSetVisible = function(visible) {
+            patitasVisible = visible;
+            stage.style.display = patitasVisible ? 'block' : 'none';
+            if (typeof bubble !== 'undefined' && bubble) bubble.style.visibility = patitasVisible ? 'visible' : 'hidden';
+        };
         window.patitasSetViseme = function (name) {
             if (!name || name === 'AUTO') { manualViseme = null; console.log('[Patitas] viseme = AUTO'); return; }
             if (VISEME_NAMES.indexOf(name) === -1) {

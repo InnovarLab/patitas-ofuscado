@@ -23,6 +23,9 @@
         if (typeof window.patitasSetVisible === 'function') {
             window.patitasSetVisible(true);
         }
+        if (typeof window.patitasGetScale === 'function' && typeof window.patitasSetScale === 'function') {
+            try { if (window.patitasGetScale() < 0.05) window.patitasSetScale(1, 0); } catch (e) {}
+        }
     }
     function findModel() {
         const panel = document.getElementById('video-tutor-panel');
@@ -104,6 +107,14 @@
         moveTo(x, y, z, durationMs) {
             ensureVisible();
             durationMs = durationMs || 1000;
+            if (typeof window.patitasSetTransform === 'function' && typeof window.patitasGetTransform === 'function') {
+                const c = window.patitasGetTransform();
+                const nx = (typeof x === 'number') ? x : c.x;
+                const ny = (typeof y === 'number') ? y : c.y;
+                const nz = (typeof z === 'number') ? z : c.z;
+                window.patitasSetTransform(nx, ny, nz, c.rotY, durationMs);
+                return new Promise(r => setTimeout(r, durationMs));
+            }
             const m = findModel();
             if (!m) return Promise.resolve();
             return Promise.all([
@@ -115,6 +126,11 @@
         rotateTo(deg, durationMs) {
             ensureVisible();
             durationMs = durationMs || 1000;
+            if (typeof window.patitasSetTransform === 'function' && typeof window.patitasGetTransform === 'function') {
+                const c = window.patitasGetTransform();
+                window.patitasSetTransform(c.x, c.y, c.z, (deg || 0) * Math.PI / 180, durationMs);
+                return new Promise(r => setTimeout(r, durationMs));
+            }
             const m = findModel();
             if (!m) return Promise.resolve();
             return animateSlider(m.sliderR, deg, durationMs);
@@ -122,6 +138,10 @@
         scaleTo(s, durationMs) {
             ensureVisible();
             durationMs = durationMs || 600;
+            if (typeof window.patitasSetScale === 'function') {
+                window.patitasSetScale(s, durationMs);
+                return new Promise(r => setTimeout(r, durationMs));
+            }
             const m = findModel();
             if (!m) return Promise.resolve();
             return animateSlider(m.sliderS, s, durationMs);
@@ -129,12 +149,20 @@
         show(fadeMs) {
             ensureVisible();
             fadeMs = fadeMs || 600;
+            if (typeof window.patitasSetScale === 'function') {
+                window.patitasSetScale(1, fadeMs);
+                return new Promise(r => setTimeout(r, fadeMs));
+            }
             const m = findModel();
             if (!m) return Promise.resolve();
             return animateSlider(m.sliderS, 1, fadeMs);
         },
         hide(fadeMs) {
             fadeMs = fadeMs || 600;
+            if (typeof window.patitasSetScale === 'function') {
+                window.patitasSetScale(0, fadeMs);
+                return new Promise(r => setTimeout(r, fadeMs));
+            }
             const m = findModel();
             if (!m) return Promise.resolve();
             return animateSlider(m.sliderS, 0, fadeMs);
