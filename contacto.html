@@ -99,6 +99,67 @@
     .fb-row { display: flex; gap: 12px; }
     .fb-row .fb-field { flex: 1; }
 
+    /* Campo "componente afectado" (aparece al elegir Error) */
+    .fb-comp { animation: pop .35s ease-out; }
+    .fb-comp-btn {
+        display: inline-flex; align-items: center; gap: 8px;
+        padding: 11px 16px; border-radius: 12px; cursor: pointer;
+        border: 1px dashed rgba(241,196,15,0.55); background: rgba(241,196,15,0.06);
+        color: var(--accent); font-weight: 700; font-family: inherit; font-size: .9rem;
+        transition: all .15s;
+    }
+    .fb-comp-btn:hover { background: rgba(241,196,15,0.12); }
+    .fb-comp-chips { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 10px; }
+    .fb-chip {
+        display: inline-flex; align-items: center; gap: 8px;
+        padding: 6px 10px 6px 12px; border-radius: 999px;
+        background: rgba(241,196,15,0.16); border: 1px solid rgba(241,196,15,0.35);
+        color: #fde9a6; font-size: .82rem; font-weight: 600;
+    }
+    .fb-chip .x { cursor: pointer; opacity: .75; font-weight: 800; }
+    .fb-chip .x:hover { opacity: 1; }
+
+    /* Modal de componentes */
+    .fb-modal {
+        position: fixed; inset: 0; z-index: 1000;
+        background: rgba(6, 9, 15, 0.66);
+        display: flex; align-items: center; justify-content: center;
+        padding: 18px; backdrop-filter: blur(3px);
+    }
+    .fb-modal-card {
+        width: 100%; max-width: 460px; max-height: 86vh; overflow: auto;
+        background: linear-gradient(160deg, #1b2230, #141a26);
+        border: 1px solid var(--border); border-radius: 18px;
+        padding: 20px; box-shadow: 0 24px 60px rgba(0,0,0,0.6);
+        animation: pop .25s ease-out;
+    }
+    .fb-modal-head { display: flex; align-items: center; justify-content: space-between; }
+    .fb-modal-title { font-size: 1.05rem; font-weight: 800; }
+    .fb-modal-x { cursor: pointer; color: var(--text-dim); font-size: 22px; line-height: 1; padding: 2px 6px; }
+    .fb-modal-x:hover { color: #fff; }
+    .fb-modal-sub { color: var(--text-dim); font-size: .82rem; margin: 4px 0 14px; }
+    .fb-comp-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+    .fb-comp-opt {
+        display: flex; align-items: center; gap: 8px;
+        padding: 10px 12px; border-radius: 11px; cursor: pointer;
+        border: 1px solid var(--border); background: rgba(255,255,255,0.03);
+        color: #cdd6df; font-size: .86rem; font-weight: 600; transition: all .13s;
+    }
+    .fb-comp-opt:hover { border-color: rgba(241,196,15,0.5); color: #fff; }
+    .fb-comp-opt.on {
+        background: linear-gradient(135deg, rgba(241,196,15,0.92), rgba(243,156,18,0.92));
+        color: #1a1a1a; border-color: transparent;
+    }
+    .fb-comp-opt .ck { margin-left: auto; font-weight: 800; opacity: 0; }
+    .fb-comp-opt.on .ck { opacity: 1; }
+    .fb-modal-done {
+        width: 100%; margin-top: 16px; padding: 12px; border: none; border-radius: 12px;
+        background: linear-gradient(135deg, var(--accent), var(--accent2)); color: #1a1a1a;
+        font-weight: 800; font-size: .95rem; cursor: pointer; font-family: inherit;
+    }
+    .fb-modal-done:hover { filter: brightness(1.05); }
+    @media (max-width: 420px) { .fb-comp-grid { grid-template-columns: 1fr; } }
+
     .fb-submit {
         width: 100%; margin-top: 6px; padding: 14px 18px;
         border: none; border-radius: 14px; cursor: pointer;
@@ -162,6 +223,14 @@
             <input type="hidden" id="fbTipoVal" value="">
         </div>
 
+        <!-- Componente afectado: aparece solo al elegir "Error" -->
+        <div class="fb-field fb-comp hidden" id="fbCompField">
+            <label class="fb-label">Componente afectado <span class="fb-hint">(si el error es de un componente del simulador)</span></label>
+            <button type="button" class="fb-comp-btn" id="fbCompOpen">🔧 Elegir componente…</button>
+            <div class="fb-comp-chips" id="fbCompChips"></div>
+            <input type="hidden" id="fbCompVal" value="">
+        </div>
+
         <div class="fb-field">
             <label class="fb-label" for="fbSeccion">¿Sobre qué parte?</label>
             <select id="fbSeccion" class="fb-select">
@@ -206,6 +275,19 @@
 
 </div>
 
+<!-- Modal de selección de componente -->
+<div class="fb-modal hidden" id="fbModal">
+    <div class="fb-modal-card">
+        <div class="fb-modal-head">
+            <div class="fb-modal-title">¿Qué componente?</div>
+            <span class="fb-modal-x" id="fbModalX" title="Cerrar">✕</span>
+        </div>
+        <p class="fb-modal-sub">Elegí uno o más componentes relacionados con el error.</p>
+        <div class="fb-comp-grid" id="fbCompGrid"></div>
+        <button type="button" class="fb-modal-done" id="fbModalDone">Listo</button>
+    </div>
+</div>
+
 <script>
 (function () {
     'use strict';
@@ -215,7 +297,7 @@
        (Ver instrucciones al pie de este archivo o las que te pasó Claude.)
        Ejemplo: 'https://script.google.com/macros/s/AKfyc.../exec'
        ════════════════════════════════════════════════════════════════ */
-    const ENDPOINT = '';
+    const ENDPOINT = 'https://script.google.com/macros/s/AKfycbwoyMplT--10sYEZOMgPiY6QjRDLFmk-0WVtV8h4hs2aJraigqS69D3XTzulIOHxONo/exec';
 
     const $ = (id) => document.getElementById(id);
     const form    = $('fbForm');
@@ -227,9 +309,7 @@
     const stars = Array.prototype.slice.call(document.querySelectorAll('.fb-star'));
     const ratingInput = $('fbRating');
     let rating = 0;
-    function paintStars(n) {
-        stars.forEach((s, i) => s.classList.toggle('on', i < n));
-    }
+    function paintStars(n) { stars.forEach((s, i) => s.classList.toggle('on', i < n)); }
     stars.forEach((s) => {
         const v = parseInt(s.dataset.v, 10);
         s.addEventListener('mouseenter', () => paintStars(v));
@@ -237,13 +317,73 @@
     });
     $('fbStars').addEventListener('mouseleave', () => paintStars(rating));
 
+    // ── Componente afectado (modal; aparece al elegir "Error") ──
+    const COMPONENTES = [
+        '🟫 Resistencia', '💡 LED', '🔆 LDR', '⚡ Capacitor', '🧲 Bobina',
+        '🔻 Diodo', '🔺 Transistor', '🔔 Buzzer', '⚙️ Motor', '🎚️ Potenciómetro',
+        '🔘 Pulsador', '🔀 Interruptor', '🔋 Fuente / Batería', '📏 Multímetro',
+        '🧩 Protoboard', '🔌 Cable / Jumper', '⏱️ NE555', '❓ Otro'
+    ];
+    const compField = $('fbCompField');
+    const compChips = $('fbCompChips');
+    const compVal   = $('fbCompVal');
+    const modal     = $('fbModal');
+    const grid      = $('fbCompGrid');
+    let selectedComps = [];
+
+    COMPONENTES.forEach(function (name) {
+        const opt = document.createElement('div');
+        opt.className = 'fb-comp-opt';
+        opt.innerHTML = '<span>' + name + '</span><span class="ck">✓</span>';
+        opt.addEventListener('click', function () {
+            const i = selectedComps.indexOf(name);
+            if (i >= 0) { selectedComps.splice(i, 1); opt.classList.remove('on'); }
+            else { selectedComps.push(name); opt.classList.add('on'); }
+        });
+        grid.appendChild(opt);
+    });
+
+    function renderChips() {
+        compChips.innerHTML = '';
+        selectedComps.forEach(function (name) {
+            const chip = document.createElement('span');
+            chip.className = 'fb-chip';
+            chip.innerHTML = '<span>' + name + '</span><span class="x" title="Quitar">✕</span>';
+            chip.querySelector('.x').addEventListener('click', function () {
+                selectedComps = selectedComps.filter((c) => c !== name);
+                Array.prototype.slice.call(grid.children).forEach(function (o) {
+                    if (o.textContent.indexOf(name) >= 0) o.classList.remove('on');
+                });
+                renderChips();
+            });
+            compChips.appendChild(chip);
+        });
+        compVal.value = selectedComps.join(', ');
+    }
+    function openModal()  { modal.classList.remove('hidden'); }
+    function closeModal() { modal.classList.add('hidden'); renderChips(); }
+    $('fbCompOpen').addEventListener('click', openModal);
+    $('fbModalDone').addEventListener('click', closeModal);
+    $('fbModalX').addEventListener('click', closeModal);
+    modal.addEventListener('click', function (e) { if (e.target === modal) closeModal(); });
+
+    function clearComps() {
+        selectedComps = [];
+        renderChips();
+        Array.prototype.slice.call(grid.children).forEach((o) => o.classList.remove('on'));
+    }
+
     // ── Pills de tipo ──────────────────────────────────────────
     const tipoInput = $('fbTipoVal');
     Array.prototype.slice.call(document.querySelectorAll('#fbTipo .fb-pill')).forEach((p) => {
         p.addEventListener('click', () => {
-            document.querySelectorAll('#fbTipo .fb-pill').forEach(x => x.classList.remove('on'));
+            document.querySelectorAll('#fbTipo .fb-pill').forEach((x) => x.classList.remove('on'));
             p.classList.add('on');
             tipoInput.value = p.dataset.v;
+            // El selector de componente solo tiene sentido para un Error.
+            const isError = p.dataset.v.indexOf('Error') >= 0;
+            compField.classList.toggle('hidden', !isError);
+            if (!isError) clearComps();
         });
     });
 
@@ -266,14 +406,15 @@
         }
 
         const data = {
-            fecha:    new Date().toISOString(),
-            rating:   rating || '',
-            tipo:     tipoInput.value || '',
-            seccion:  $('fbSeccion').value || '',
-            nombre:   $('fbNombre').value.trim() || '',
-            email:    email || '',
-            mensaje:  mensaje,
-            ua:       navigator.userAgent
+            fecha:      new Date().toISOString(),
+            rating:     rating || '',
+            tipo:       tipoInput.value || '',
+            componente: compVal.value || '',
+            seccion:    $('fbSeccion').value || '',
+            nombre:     $('fbNombre').value.trim() || '',
+            email:      email || '',
+            mensaje:    mensaje,
+            ua:         navigator.userAgent
         };
 
         submit.disabled = true;
@@ -281,14 +422,12 @@
         setMsg('', '');
 
         try {
-            // text/plain evita el preflight CORS; Apps Script lee e.postData.contents.
             await fetch(ENDPOINT, {
                 method: 'POST',
                 mode: 'no-cors',
                 headers: { 'Content-Type': 'text/plain;charset=utf-8' },
                 body: JSON.stringify(data)
             });
-            // Con no-cors la respuesta es opaca: si no hubo error de red, asumimos OK.
             form.classList.add('hidden');
             success.classList.remove('hidden');
         } catch (err) {
@@ -304,7 +443,9 @@
         form.reset();
         rating = 0; ratingInput.value = ''; paintStars(0);
         tipoInput.value = '';
-        document.querySelectorAll('#fbTipo .fb-pill').forEach(x => x.classList.remove('on'));
+        document.querySelectorAll('#fbTipo .fb-pill').forEach((x) => x.classList.remove('on'));
+        clearComps();
+        compField.classList.add('hidden');
         submit.disabled = false; submit.textContent = 'Enviar feedback 🚀';
         setMsg('', '');
         success.classList.add('hidden');
@@ -318,7 +459,7 @@
   CÓMO CONECTARLO A TU GOOGLE SHEET (Apps Script Web App)
   ════════════════════════════════════════════════════════════════════
   1) Creá una Google Sheet. En la fila 1 poné estos encabezados:
-        Fecha | Valoración | Tipo | Sección | Nombre | Email | Mensaje | Navegador
+        Fecha | Valoración | Tipo | Componente | Sección | Nombre | Email | Mensaje | Navegador
   2) En la Sheet: menú  Extensiones → Apps Script.
   3) Borrá lo que haya y pegá ESTE código:
 
@@ -328,7 +469,7 @@
             var d = JSON.parse(e.postData.contents);
             hoja.appendRow([
               new Date(),
-              d.rating || '', d.tipo || '', d.seccion || '',
+              d.rating || '', d.tipo || '', d.componente || '', d.seccion || '',
               d.nombre || '', d.email || '', d.mensaje || '', d.ua || ''
             ]);
             return ContentService.createTextOutput(JSON.stringify({ok:true}))
