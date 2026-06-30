@@ -219,6 +219,52 @@
     const FC_ICON_CLEAR = _fcSvgDataUri(
         '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"><circle cx="8" cy="8" r="8" fill="#c0392b"/><path d="M5 5L11 11M11 5L5 11" stroke="#fff" stroke-width="2"/></svg>');
 
+    function _fcOptimizeGif(dataUrl, maxWidth, done) {
+        (async function () {
+            try {
+                if (typeof ImageDecoder === 'undefined' || !window.gifenc) { done(null, 'sin-soporte'); return; }
+                const G = window.gifenc;
+                const ab = await (await fetch(dataUrl)).arrayBuffer();
+                const dec = new ImageDecoder({ data: ab, type: 'image/gif' });
+                await dec.tracks.ready;
+                const count = (dec.tracks.selectedTrack && dec.tracks.selectedTrack.frameCount) || 1;
+                const step = count > 60 ? 2 : 1;
+                const enc = G.GIFEncoder();
+                let cv, ctx, nw, nh;
+                for (let i = 0; i < count; i += step) {
+                    const res = await dec.decode({ frameIndex: i });
+                    const image = res.image;
+                    if (!cv) {
+                        const ow = image.displayWidth || image.codedWidth;
+                        const oh = image.displayHeight || image.codedHeight;
+                        const sc = Math.min(1, maxWidth / ow);
+                        nw = Math.max(1, Math.round(ow * sc));
+                        nh = Math.max(1, Math.round(oh * sc));
+                        cv = document.createElement('canvas'); cv.width = nw; cv.height = nh;
+                        ctx = cv.getContext('2d', { willReadFrequently: true });
+                    }
+                    ctx.clearRect(0, 0, nw, nh);
+                    ctx.drawImage(image, 0, 0, nw, nh);
+                    const data = ctx.getImageData(0, 0, nw, nh).data;
+                    const palette = G.quantize(data, 128);
+                    const index = G.applyPalette(data, palette);
+                    let delay = image.duration ? Math.round(image.duration / 1000) : 80;
+                    delay = Math.max(20, delay * step);
+                    enc.writeFrame(index, nw, nh, { palette: palette, delay: delay });
+                    image.close();
+                }
+                enc.finish();
+                const bytes = enc.bytes();
+                let bin = '';
+                for (let i = 0; i < bytes.length; i += 0x8000) bin += String.fromCharCode.apply(null, bytes.subarray(i, i + 0x8000));
+                done('data:image/gif;base64,' + btoa(bin), null);
+            } catch (e) {
+                console.warn('[flashcard] optimización de GIF falló:', e);
+                done(null, String((e && e.message) || e));
+            }
+        })();
+    }
+
     function _fcPickImage(maxDim, cb) {
         const inp = document.createElement('input');
         inp.type = 'file';
@@ -228,8 +274,24 @@
             if (!file) return;
             const reader = new FileReader();
             reader.onload = function (e) {
-                // Los GIF se conservan tal cual para no perder la animación (no pasan por canvas).
-                if (file.type === 'image/gif') { cb(e.target.result); return; }
+                // GIF: avisar si es pesado y ofrecer auto-optimización (manteniendo la animación).
+                if (file.type === 'image/gif') {
+                    const _mb = file.size / 1048576;
+                    const _canOpt = (typeof ImageDecoder !== 'undefined' && window.gifenc);
+                    if (_mb > 1.2 && _canOpt) {
+                        if (confirm('Este GIF pesa ' + _mb.toFixed(1) + ' MB. Para que la lección no quede pesada, ¿lo optimizo automáticamente (reescalar y recomprimir, manteniendo la animación)?')) {
+                            _fcOptimizeGif(e.target.result, 320, function (opt) {
+                                if (opt) { try { console.log('[flashcard] GIF optimizado: ' + _mb.toFixed(1) + ' MB -> ~' + ((opt.length * 0.75) / 1048576).toFixed(2) + ' MB'); } catch (x) {} cb(opt); }
+                                else { alert('No se pudo optimizar el GIF automáticamente; se usará el original.'); cb(e.target.result); }
+                            });
+                            return;
+                        }
+                    } else if (_mb > 1.2) {
+                        alert('Aviso: este GIF pesa ' + _mb.toFixed(1) + ' MB y se embeberá tal cual (hará pesada la lección). Conviene reducirlo antes de subirlo.');
+                    }
+                    cb(e.target.result);
+                    return;
+                }
                 const img = new Image();
                 img.onload = function () {
                     let w = img.width, h = img.height;
