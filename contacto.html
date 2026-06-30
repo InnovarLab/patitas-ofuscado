@@ -431,6 +431,7 @@
             form.classList.add('hidden');
             success.classList.remove('hidden');
             window.scrollTo({ top: 0, behavior: 'smooth' });
+            try { window.parent.postMessage('patitas-feedback-sent', '*'); } catch (e) {}
         } catch (err) {
             console.error('[Feedback] error de envío:', err);
             setMsg('No se pudo enviar. Revisá tu conexión e intentá de nuevo.', 'err');

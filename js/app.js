@@ -448,3 +448,12 @@ window.onclick = function(event) {
             window.closeCircuitModal();
         }
     });
+
+
+// Feedback enviado desde contacto.html (iframe): subir la vista de la pagina
+// para que se vea la pantalla de confirmacion "Gracias / Enviar otro".
+window.addEventListener('message', function (ev) {
+    if (ev && ev.data === 'patitas-feedback-sent') {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+});
