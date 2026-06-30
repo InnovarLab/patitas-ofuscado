@@ -454,6 +454,14 @@ window.onclick = function(event) {
 // para que se vea la pantalla de confirmacion "Gracias / Enviar otro".
 window.addEventListener('message', function (ev) {
     if (ev && ev.data === 'patitas-feedback-sent') {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        var f = document.getElementById('feedbackFrame');
+        var nav = document.getElementById('navbar');
+        var navH = nav ? nav.offsetHeight : 0;
+        if (f && f.getBoundingClientRect) {
+            var y = f.getBoundingClientRect().top + window.pageYOffset - navH - 12;
+            window.scrollTo({ top: Math.max(0, y), behavior: 'smooth' });
+        } else {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
     }
 });
